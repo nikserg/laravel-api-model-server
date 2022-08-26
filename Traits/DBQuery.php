@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Traits;
+namespace nikserg\LaravelApiModelServer\Traits;
 
 trait DBQuery {
 
@@ -13,9 +13,11 @@ trait DBQuery {
         return $this;
     }
 
-    public function setSort(string $column = 'id', string $direction = 'asc')
+    public function setSort(?string $column = 'id', ?string $direction = 'asc')
     {
-        return $this->query->orderBy($column ?? 'id', $direction ?? 'asc');
+        $this->query->orderBy($column ?? 'id', $direction ?? 'asc');
+
+        return $this;
     }
 
     public function closeQueryPaginate(?int $per_page = 15) // collection

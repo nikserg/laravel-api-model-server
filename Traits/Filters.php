@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Traits;
+namespace nikserg\LaravelApiModelServer\Traits;
 
 trait Filters {
 
