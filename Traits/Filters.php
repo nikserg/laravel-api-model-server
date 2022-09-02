@@ -6,14 +6,18 @@ trait Filters {
 
     private $query;
 
-    public function setFilters(?string $search = null)
+    public function setFilters(?string $search = null, bool $having = false)
     {
         if (!$search || !is_string($search))
             return $this;
 
-        array_map(function ($params) {
+        array_map(function ($params) use ($having) {
 
-            $this->query->orWhere($params['column'], $params['operator'], $params['value']);
+            if ($having) {
+                $this->query->orHaving($params['column'], $params['operator'], $params['value']);
+            } else {
+                $this->query->orWhere($params['column'], $params['operator'], $params['value']);
+            }
 
         }, json_decode($search, true));
 
