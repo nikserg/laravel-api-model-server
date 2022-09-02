@@ -2,18 +2,35 @@
 
 namespace nikserg\LaravelApiModelServer\Traits;
 
-trait Filters {
+trait Filters
+{
 
     private $query;
 
-    public function setFilters(?string $search = null)
+    /**
+     * Установка фильтра
+     *
+     * @param array|string|null $search
+     * @param boolean $having
+     * @return Builder $builder
+     */
+    public function setFilters(array|string $search = null, bool $having = false)
     {
-        if (!$search || !is_string($search))
+        if (is_string($search)) {
+            $search = json_decode($search, true);
+        } else if (is_array($search)) {
+            $search = $search;
+        } else {
             return $this;
+        }
 
-        array_map(function ($params) {
+        array_map(function ($params) use ($having) {
 
-            $this->query->orWhere($params['column'], $params['operator'], $params['value']);
+            if ($having) {
+                $this->query->orHaving($params['column'], $params['operator'], $params['value']);
+            } else {
+                $this->query->orWhere($params['column'], $params['operator'], $params['value']);
+            }
 
         }, json_decode($search, true));
 
