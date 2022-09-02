@@ -14,12 +14,12 @@ trait Filters
      * @param boolean $having
      * @return Builder $builder
      */
-    public function setFilters(array|string $search, bool $having = false)
+    public function setFilters(array|string|null $search = null, bool $having = false)
     {
         if (is_string($search)) {
             $search = json_decode($search, true);
-        } else {
-            $search = $search;
+        } else if (!$search) {
+            return $this;
         }
 
         array_map(function ($params) use ($having) {
