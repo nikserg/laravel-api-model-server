@@ -14,14 +14,12 @@ trait Filters
      * @param boolean $having
      * @return Builder $builder
      */
-    public function setFilters(array|string $search = null, bool $having = false)
+    public function setFilters(array|string $search, bool $having = false)
     {
         if (is_string($search)) {
             $search = json_decode($search, true);
-        } else if (is_array($search)) {
-            $search = $search;
         } else {
-            return $this;
+            $search = $search;
         }
 
         array_map(function ($params) use ($having) {
@@ -32,7 +30,7 @@ trait Filters
                 $this->query->orWhere($params['column'], $params['operator'], $params['value']);
             }
 
-        }, json_decode($search, true));
+        }, $search);
 
         return $this;
     }
