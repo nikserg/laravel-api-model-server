@@ -10,7 +10,7 @@ trait Filters
     private $query;
 
     /**
-     * Установка фильтра
+     * Установка поиска
      *
      * @param array|string|null $search
      * @param boolean $having
