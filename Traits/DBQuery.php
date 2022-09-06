@@ -2,30 +2,68 @@
 
 namespace nikserg\LaravelApiModelServer\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+
 trait DBQuery {
 
     private $query;
 
-    public function appendQuery()
+    /**
+     * New query
+     *
+     * @return Builder
+     */
+    public function appendQuery(): Builder
     {
         $this->query = $this->newModelQuery()->select();
 
         return $this;
     }
 
-    public function setSort(?string $column = 'id', ?string $direction = 'asc')
+    /**
+     * Set sort
+     *
+     * @param string|null $column
+     * @param string|null $direction
+     * @return Builder
+     */
+    public function setSort(?string $column = 'id', ?string $direction = 'asc'): Builder
     {
         $this->query->orderBy($column ?? 'id', $direction ?? 'asc');
 
         return $this;
     }
 
-    public function closeQueryPaginate(?int $per_page = 15) // collection
+    /**
+     * return query builder
+     *
+     * @return QueryBuilder
+     */
+    public function getQuery(): QueryBuilder
+    {
+        return $this->query;
+    }
+
+    /**
+     * close builder
+     *
+     * @param integer|null $per_page
+     * @return LengthAwarePaginator
+     */
+    public function closeQueryPaginate(?int $per_page = 15): LengthAwarePaginator
     {
         return $this->query->paginate($per_page);
     }
 
-    public function closeQueryGet() // collection
+    /**
+     * Close builder
+     *
+     * @return Collection
+     */
+    public function closeQueryGet(): Collection
     {
         return $this->query->get();
     }
