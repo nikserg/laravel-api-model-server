@@ -14,7 +14,7 @@ trait DBQuery {
     /**
      * New query
      *
-     * @return Builder
+     * @return Model
      */
     public function appendQuery(): Model
     {
@@ -28,7 +28,7 @@ trait DBQuery {
      *
      * @param string|null $column
      * @param string|null $direction
-     * @return Builder
+     * @return Model
      */
     public function setSort(?string $column = 'id', ?string $direction = 'asc'): Model
     {
