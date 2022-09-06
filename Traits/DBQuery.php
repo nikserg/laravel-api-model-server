@@ -5,6 +5,7 @@ namespace nikserg\LaravelApiModelServer\Traits;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 trait DBQuery {
 
@@ -34,6 +35,16 @@ trait DBQuery {
         $this->query->orderBy($column ?? 'id', $direction ?? 'asc');
 
         return $this;
+    }
+
+    /**
+     * return query builder
+     *
+     * @return QueryBuilder
+     */
+    public function getQuery(): QueryBuilder
+    {
+        return $this->query;
     }
 
     /**
