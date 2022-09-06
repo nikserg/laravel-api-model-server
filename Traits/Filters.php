@@ -2,19 +2,21 @@
 
 namespace nikserg\LaravelApiModelServer\Traits;
 
+use Illuminate\Database\Eloquent\Model;
+
 trait Filters
 {
 
     private $query;
 
     /**
-     * Установка фильтра
+     * Установка поиска
      *
      * @param array|string|null $search
      * @param boolean $having
-     * @return Builder $builder
+     * @return Model $model
      */
-    public function setSearch(array|string|null $search = null, bool $having = false)
+    public function setSearch(array|string|null $search = null, bool $having = false): Model
     {
         if (is_string($search)) {
             $search = json_decode($search, true);

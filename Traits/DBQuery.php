@@ -2,10 +2,10 @@
 
 namespace nikserg\LaravelApiModelServer\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Builder;
 
 trait DBQuery {
 
@@ -14,9 +14,9 @@ trait DBQuery {
     /**
      * New query
      *
-     * @return Builder
+     * @return Model
      */
-    public function appendQuery(): Builder
+    public function appendQuery(): Model
     {
         $this->query = $this->newModelQuery()->select();
 
@@ -28,9 +28,9 @@ trait DBQuery {
      *
      * @param string|null $column
      * @param string|null $direction
-     * @return Builder
+     * @return Model
      */
-    public function setSort(?string $column = 'id', ?string $direction = 'asc'): Builder
+    public function setSort(?string $column = 'id', ?string $direction = 'asc'): Model
     {
         $this->query->orderBy($column ?? 'id', $direction ?? 'asc');
 
@@ -38,11 +38,11 @@ trait DBQuery {
     }
 
     /**
-     * return query builder
+     * return builder
      *
-     * @return QueryBuilder
+     * @return Builder
      */
-    public function getQuery(): QueryBuilder
+    public function getQuery(): Builder
     {
         return $this->query;
     }
